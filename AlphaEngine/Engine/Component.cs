@@ -10,6 +10,7 @@ namespace AlphaEngine
     {
 
         private GameObject gameObject;
+        private bool started;
 
         /// <summary>
         /// Represent gameobject to which this component is attached
@@ -23,8 +24,18 @@ namespace AlphaEngine
         }
 
         public bool IsActive { get; set; } = true;
+        public bool Started
+        {
+            get
+            {
+                return started;
+            }
+        }
 
-       
+        public Component()
+        {
+            Awake();
+        }
 
         public virtual void Awake()
         {
@@ -51,6 +62,16 @@ namespace AlphaEngine
             if (gameObject != null) return; //check for future use
 
             gameObject = owner;
+        }
+        /// <summary>
+        /// WARNING: this method is internally used, if you try to use this,
+        /// simply the action will be ignored.
+        /// </summary>
+        public void SetStarted()
+        {
+            if (started) return;
+
+            started = true;
         }
     }
 }

@@ -12,9 +12,22 @@ namespace AlphaEngine.Test
     [TestFixture]
     public class TestGameObject
     {
-        public class FakeComponent:Component
+        public class FakeComponent : Component
         {
-            
+            public int fakeVariable = 0;
+
+            public override void Awake()
+            {
+                fakeVariable++;
+            }
+            public override void Start()
+            {
+                fakeVariable++;
+            }
+            public override void Update()
+            {
+                fakeVariable++;
+            }
         }
         public class FakeComponent2 : Component
         {
@@ -72,6 +85,61 @@ namespace AlphaEngine.Test
             Assert.That(c.GameObject, Is.EqualTo(go1));
             c.SetOwner(go2);  //will be ignored
             Assert.That(c.GameObject, Is.EqualTo(go1));
+        }
+        [Test]
+        public void GreenLight_ComponentAwake_Start_Update() //test gameobject side
+        {
+            FakeComponent fake = go.AddComponent<FakeComponent>();
+            Assert.That(fake.fakeVariable, Is.EqualTo(1)); //only awake before start and update
+            go.Update(); //here component will be started and updated (increment by 2)
+            Assert.That(fake.fakeVariable, Is.EqualTo(3));
+            go.Update();
+            go.Update();
+            Assert.That(fake.fakeVariable, Is.EqualTo(5));
+        }
+        [Test]
+        public void RedLight_ComponentAwake_Start_Update() //test gameobject side
+        {
+            FakeComponent fake = go.AddComponent<FakeComponent>();
+            fake.IsActive = false;
+            go.Update();
+            Assert.That(fake.fakeVariable, !Is.EqualTo(3));
+            go.Update();
+            go.Update();
+            Assert.That(fake.fakeVariable, !Is.EqualTo(5));
+            go.Update();
+            Assert.That(fake.fakeVariable, !Is.EqualTo(5));
+            Assert.That(fake.fakeVariable, Is.EqualTo(1));
+        }
+        [Test]
+        public void GreenLight_ComponentCount()
+        {
+            Assert.That(go.ComponentsCount, Is.EqualTo(0));
+            go.AddComponent<FakeComponent>();
+            Assert.That(go.ComponentsCount, Is.EqualTo(1));
+            go.AddComponent<FakeComponent>();
+            go.AddComponent<FakeComponent>();
+            Assert.That(go.ComponentsCount, Is.EqualTo(3));
+        }
+        [Test]
+        public void GreenLight_GetComponents()
+        {
+            FakeComponent[] fakes = go.GetComponents<FakeComponent>();
+            Assert.That(fakes.Length, Is.EqualTo(0));
+            go.AddComponent<FakeComponent>();
+            go.AddComponent<FakeComponent>();
+            go.AddComponent<FakeComponent>();
+            fakes = go.GetComponents<FakeComponent>();
+            Assert.That(fakes.Length, Is.EqualTo(3));
+        }
+        [Test]
+        public void RedLight_GetComponents()
+        {
+            go.AddComponent<FakeComponent>();
+            go.AddComponent<FakeComponent>();
+            go.AddComponent<FakeComponent2>();
+            FakeComponent[] fakes = go.GetComponents<FakeComponent>();
+            Assert.That(fakes.Length, !Is.EqualTo(0));
         }
     }
 }

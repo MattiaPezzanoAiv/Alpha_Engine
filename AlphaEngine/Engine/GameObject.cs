@@ -18,6 +18,17 @@ namespace AlphaEngine
             components = new List<Component>();
         }
 
+        /// <summary>
+        /// Return a number of attached components
+        /// </summary>
+        public int ComponentsCount
+        {
+            get
+            {
+                return components.Count;
+            }
+        }
+
 
         public void Start()
         {
@@ -29,6 +40,17 @@ namespace AlphaEngine
         public void Update()
         {
             if (!started) Start();
+
+            foreach (Component c in components)
+            {
+                if (!c.IsActive) continue;
+                if(!c.Started)
+                {
+                    c.Start();
+                    c.SetStarted();
+                }
+                c.Update();
+            }
         }
 
         /// <summary>
@@ -59,6 +81,21 @@ namespace AlphaEngine
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>Return an array of all components of type T. An empty array if there are no components of type T</returns>
+        public T[] GetComponents<T>() where T:Component
+        {
+            List<T> neededComponents = new List<T>();
+            foreach (Component c in components)
+            {
+                if (c is T)
+                    neededComponents.Add((T)c);
+            }
+            return neededComponents.ToArray();
+        }
         
     }
 }
