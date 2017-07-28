@@ -52,6 +52,15 @@ namespace AlphaEngine.Test
             AlphaEngine.Time.TimeScale = 5f;
             Assert.That(AlphaEngine.Time.DeltaTime, Is.Not.EqualTo(originalTimeScale));
         }
+        [Test]
+        public void Test_TimeScale()
+        {
+            Assert.That(AlphaEngine.Time.TimeScale, Is.EqualTo(1f).Within(0.0000001f));
+            AlphaEngine.Tick();
+            Assert.That(AlphaEngine.Time.TimeScale, Is.EqualTo(1f).Within(0.0000001f));
+            AlphaEngine.Time.TimeScale = 50.5f;
+            Assert.That(AlphaEngine.Time.TimeScale, Is.EqualTo(50.5f).Within(0.0000001f));
+        }
 
         [Test]
         public void GreenLight_UnscaledDeltaTime()
