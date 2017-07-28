@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestGameObject.cs" />
     <Compile Include="TestTime.cs" />
   </ItemGroup>
   <ItemGroup>
