@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlphaEngine
 {
-    public sealed class GameObject :BaseObject, IStartable, IUpdatable
+    public sealed class GameObject : BaseObject, IStartable, IUpdatable
     {
         private bool started;
         private List<Component> components;
@@ -33,7 +33,7 @@ namespace AlphaEngine
         public void Start()
         {
             //use this for initialization?
-       
+
             started = true;
         }
 
@@ -44,7 +44,7 @@ namespace AlphaEngine
             foreach (Component c in components)
             {
                 if (!c.IsActive) continue;
-                if(!c.Started)
+                if (!c.Started)
                 {
                     c.Start();
                     c.SetStarted();
@@ -58,7 +58,7 @@ namespace AlphaEngine
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>Return the instance of added component</returns>
-        public T AddComponent<T>() where T : Component,new()
+        public T AddComponent<T>() where T : Component, new()
         {
             T newComp = new T();
             newComp.SetOwner(this);
@@ -86,7 +86,7 @@ namespace AlphaEngine
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>Return an array of all components of type T. An empty array if there are no components of type T</returns>
-        public T[] GetComponents<T>() where T:Component
+        public T[] GetComponents<T>() where T : Component
         {
             List<T> neededComponents = new List<T>();
             foreach (Component c in components)
@@ -96,6 +96,28 @@ namespace AlphaEngine
             }
             return neededComponents.ToArray();
         }
-        
+
+        /// <summary>
+        /// Remove the first component of type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns>Return true if component was removed, else return false</returns>
+        public bool RemoveComponent<T>() where T : Component
+        {
+            T toRemove = null;
+            foreach (Component c in components)
+            {
+                if (c is T)
+                {
+                    toRemove = (T)c;
+                    break;
+                }
+            }
+            if (toRemove == null)
+                return false;
+
+            components.Remove(toRemove);
+            return true;
+        }
     }
 }

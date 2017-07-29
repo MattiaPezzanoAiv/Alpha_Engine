@@ -141,5 +141,19 @@ namespace AlphaEngine.Test
             FakeComponent[] fakes = go.GetComponents<FakeComponent>();
             Assert.That(fakes.Length, !Is.EqualTo(0));
         }
+        [Test]
+        public void GreenLight_RemoveComponent()
+        {
+            go.AddComponent<FakeComponent>();
+            go.AddComponent<FakeComponent2>();
+            go.RemoveComponent<FakeComponent>();
+            Assert.That(go.ComponentsCount, Is.EqualTo(1));
+        }
+        [Test]
+        public void RedLight_RemoveComponent()
+        {
+            bool wasRemoved = go.RemoveComponent<FakeComponent>();
+            Assert.That(wasRemoved, Is.EqualTo(false));
+        }
     }
 }
