@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Aiv.Fast2D;
 using OpenTK;
+using System.Reflection;
 
 namespace AlphaEngine
 {
@@ -45,6 +46,39 @@ namespace AlphaEngine
         public static void Tick()
         {
             window.Update();
+        }
+
+        public static Dictionary<string,Type> ComponentsTypeMapping
+        {
+            get
+            {
+                Dictionary<string, Type> behaviourMapping = new Dictionary<string, Type>();
+
+                Assembly executingAssembly = Assembly.GetEntryAssembly();
+                foreach (Type t in executingAssembly.GetTypes())
+                {
+                    if (t.IsSubclassOf(typeof(Component)))
+                    {
+                        behaviourMapping[t.Name] = t;
+                    }
+                }
+
+                AssemblyName[] assemblyNames = executingAssembly.GetReferencedAssemblies();
+
+                foreach (AssemblyName assemblyName in assemblyNames)
+                {
+                    Assembly refAssembly = Assembly.GetAssembly(assemblyName.GetType());
+                    Type[] assemblyTypes = refAssembly.GetTypes();
+                    foreach (Type t in assemblyTypes)
+                    {
+                        if (t.IsSubclassOf(typeof(Component)))
+                        {
+                            behaviourMapping[t.Name] = t;
+                        }
+                    }
+                }
+                return behaviourMapping;
+            }
         }
     }
 }

@@ -12,8 +12,11 @@ namespace AlphaEngine
     {
         static void Main(string[] args)
         {
-            AlphaEngine.Init("test", new Vector2(50, 50));
-            AlphaEngine.Run();
+            GameObject go = new GameObject("pippo");
+            GameObject go2 = GameObject.ParseGOFromFile("../../TestFolder/MyFirstGameObject.txt");
+
+
+            Console.ReadLine();
         }
     }
 }

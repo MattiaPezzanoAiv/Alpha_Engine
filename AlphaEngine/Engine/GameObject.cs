@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
 
 namespace AlphaEngine
 {
@@ -118,6 +120,59 @@ namespace AlphaEngine
 
             components.Remove(toRemove);
             return true;
+        }
+
+
+
+
+
+
+
+
+        //static props
+        /// <summary>
+        /// Create an instance of a gameobject in a current loaded scene
+        /// </summary>
+        public static void Instatiate(GameObject go)
+        {
+            //add go at the scene objects
+        }
+
+        public static GameObject ParseGOFromFile(string filepath)
+        {
+            GameObject currentGO = new GameObject(filepath);
+
+            using (StreamReader reader = new StreamReader(filepath))
+            {
+                string line = null;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line == "") //is a separator, next component
+                        continue;
+
+                    if (line.StartsWith("#")) //is a comment line
+                        continue;
+
+                    if (!line.Contains(":"))
+                    {
+                        //is a component name
+                        Type componentType = AlphaEngine.ComponentsTypeMapping[line];
+                        if (componentType == null)
+                            throw new Exception("component type does not exist");
+                        if (!componentType.IsSubclassOf(typeof(Component)))
+                            throw new Exception("component type is not a subclass of component");
+
+                        MethodInfo addComponent = typeof(GameObject).GetMethod("AddComponent");
+                        MethodInfo generic = addComponent.MakeGenericMethod(componentType);
+                        generic.Invoke(currentGO,new object[] { });
+                    }
+                    else
+                    {
+                        //is a public field 
+                    }
+                }
+            }
+            return currentGO;
         }
     }
 }

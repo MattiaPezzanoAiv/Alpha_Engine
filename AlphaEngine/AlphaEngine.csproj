@@ -59,6 +59,7 @@
     <Compile Include="Engine\Interfaces\IAwakable.cs" />
     <Compile Include="Engine\Interfaces\IStartable.cs" />
     <Compile Include="Engine\Interfaces\IUpdatable.cs" />
+    <Compile Include="Engine\SceneManager\SceneManager.cs" />
     <Compile Include="Engine\Time.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
