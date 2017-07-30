@@ -53,7 +53,8 @@
   <ItemGroup>
     <Compile Include="Engine\AlphaEngine.cs" />
     <Compile Include="Engine\BaseObject.cs" />
-    <Compile Include="Engine\Component.cs" />
+    <Compile Include="Engine\Components\Component.cs" />
+    <Compile Include="Engine\Components\Transform.cs" />
     <Compile Include="Engine\GameObject.cs" />
     <Compile Include="Engine\Interfaces\IAwakable.cs" />
     <Compile Include="Engine\Interfaces\IStartable.cs" />
