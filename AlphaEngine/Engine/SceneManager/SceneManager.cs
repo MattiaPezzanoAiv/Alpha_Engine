@@ -40,7 +40,16 @@ namespace AlphaEngine
         /// </summary>
         public static void LoadScene(string sceneName)
         {
+            string fullScenePath = scenesDirectoryPath + sceneName;
+            string[] sceneGO = Directory.GetFiles(fullScenePath);
 
+            //instance new scene
+            loadedObjects = new Dictionary<string, GameObject>();
+            foreach (var go in sceneGO)
+            {
+                GameObject myGo = GameObject.ParseGOFromFile(go);
+                loadedObjects.Add(myGo.Name, myGo);
+            }
         }
     }
 }
