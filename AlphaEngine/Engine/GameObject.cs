@@ -156,15 +156,13 @@ namespace AlphaEngine
                     if (!line.Contains(":"))
                     {
                         //is a component name
+                        if (!AlphaEngine.ComponentsTypeMapping.ContainsKey(line))
+                            throw new NotAComponentException();
                         Type componentType = AlphaEngine.ComponentsTypeMapping[line];
-                        if (componentType == null)
-                            throw new Exception("component type does not exist");
-                        if (!componentType.IsSubclassOf(typeof(Component)))
-                            throw new Exception("component type is not a subclass of component");
 
                         MethodInfo addComponent = typeof(GameObject).GetMethod("AddComponent");
                         MethodInfo generic = addComponent.MakeGenericMethod(componentType);
-                        generic.Invoke(currentGO,new object[] { });
+                        generic.Invoke(currentGO, new object[] { });
                     }
                     else
                     {

@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\AlphaEngine.cs" />
+    <Compile Include="Engine\AlphaException.cs" />
     <Compile Include="Engine\BaseObject.cs" />
     <Compile Include="Engine\Components\Component.cs" />
     <Compile Include="Engine\Components\Transform.cs" />
