@@ -3,11 +3,62 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK;
 
 namespace AlphaEngine
 {
-    public class Transform:Component
+    public class Transform : Component
     {
-        public int tempValue;
+
+        private List<Transform> children;
+        private Transform parent;
+
+        private Vector2 position;
+
+
+
+        /// <summary>
+        /// Set a new parent to this object, pass null argument for unparented object
+        /// </summary>
+        /// <param name="newParent"></param>
+        public void SetParent(Transform newParent)
+        {
+            if (Parent == newParent) return; //setting the same parent
+
+            if (Parent != null)
+                Parent.children.Remove(this); //remove me from my father child
+
+            if (newParent == null)
+            {
+                Parent = null;  //set my father null
+            }
+            else 
+            {
+                Parent = newParent;
+                Parent.children.Add(this);
+            }
+        }
+        public Transform Parent
+        {
+            get
+            {
+                return parent;
+            }
+            set
+            {
+                parent = value;
+            }
+        }
+        public Vector2 Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+            }
+        }
     }
 }

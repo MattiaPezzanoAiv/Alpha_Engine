@@ -149,7 +149,6 @@ namespace AlphaEngine
                 {
                     if (line == "") //is a separator, next component
                         continue;
-
                     if (line.StartsWith("#")) //is a comment line
                         continue;
 
@@ -158,6 +157,7 @@ namespace AlphaEngine
                         //is a component name
                         if (!AlphaEngine.ComponentsTypeMapping.ContainsKey(line))
                             throw new NotAComponentException();
+
                         Type componentType = AlphaEngine.ComponentsTypeMapping[line];
 
                         MethodInfo addComponent = typeof(GameObject).GetMethod("AddComponent");

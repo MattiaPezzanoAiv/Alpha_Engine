@@ -7,6 +7,8 @@ using NUnit.Framework;
 using Aiv.Fast2D;
 using OpenTK;
 using System.IO;
+using AlphaEngine;
+using System.Reflection;
 
 namespace AlphaEngine.Test
 {
@@ -157,9 +159,10 @@ namespace AlphaEngine.Test
             Assert.That(wasRemoved, Is.EqualTo(false));
         }
         [Test]
-        public void RedLight_ExeptionThrowingIsNotAComponent() //fail, not find folder
+        public void RedLight_ExeptionThrowingIsNotAComponent() 
         {
-            Assert.That(() => GameObject.ParseGOFromFile("../../TestFolder/NotAComponent.txt"), Throws.Exception.TypeOf<NotAComponentException>());
+            
+            Assert.That(() => GameObject.ParseGOFromFile("AlphaEngine.Test/TestFolder/NotAComponent.txt"), Throws.Exception.TypeOf<NotAComponentException>());
         }
     }
 }
