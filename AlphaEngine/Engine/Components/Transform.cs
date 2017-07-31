@@ -16,6 +16,10 @@ namespace AlphaEngine
         private Vector2 position;
 
 
+        public Transform()
+        {
+            children = new List<Transform>();
+        }
 
         /// <summary>
         /// Set a new parent to this object, pass null argument for unparented object
@@ -47,6 +51,13 @@ namespace AlphaEngine
             set
             {
                 parent = value;
+            }
+        }
+        public int ChildCount
+        {
+            get
+            {
+                return children.Count;
             }
         }
         public Vector2 Position
