@@ -159,9 +159,8 @@ namespace AlphaEngine.Test
             Assert.That(wasRemoved, Is.EqualTo(false));
         }
         [Test]
-        public void RedLight_ExeptionThrowingIsNotAComponent() 
+        public void RedLight_ExeptionThrowingIsNotAComponent()  //not work because have an assembly problem
         {
-            
             Assert.That(() => GameObject.ParseGOFromFile("AlphaEngine.Test/TestFolder/NotAComponent.txt"), Throws.Exception.TypeOf<NotAComponentException>());
         }
     }

@@ -21,8 +21,9 @@ namespace AlphaEngine
             window = new Window((int)contextSize.X, (int)contextSize.Y, contextName, fullScreen, depthSize, antialiasingSamples, stencilBuffers);
             time = new Time(window);
 
-
+            
             #region DEVELOPMENT_IN_PAUSE
+            /*
             //paused this code development fo a test problem on assembly(code is ok but test fail)
 
             //initialization of type dictionary
@@ -53,7 +54,9 @@ namespace AlphaEngine
                     }
                 }
             }
+            */
             #endregion
+            
         }
 
 

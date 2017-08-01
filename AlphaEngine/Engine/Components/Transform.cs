@@ -14,6 +14,7 @@ namespace AlphaEngine
         private Transform parent;
 
         private Vector2 position;
+        private Vector2 localPosition;
 
 
         public Transform()
@@ -38,6 +39,15 @@ namespace AlphaEngine
             }
             else 
             {
+                //parenting check
+                Transform parentChecked = newParent;
+                while(parentChecked != null)
+                {
+                    if (parentChecked.parent == this)
+                        throw new RedundantFatherException();
+                    else
+                        parentChecked = parentChecked.Parent;
+                }
                 Parent = newParent;
                 Parent.children.Add(this);
             }
@@ -70,6 +80,11 @@ namespace AlphaEngine
             {
                 position = value;
             }
+        }
+        public Vector2 LocalPosition
+        {
+            get;
+            set;
         }
     }
 }

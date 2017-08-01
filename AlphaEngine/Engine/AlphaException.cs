@@ -21,4 +21,8 @@ namespace AlphaEngine
     {
 
     }
+    public class RedundantFatherException:AlphaException
+    {
+
+    }
 }
