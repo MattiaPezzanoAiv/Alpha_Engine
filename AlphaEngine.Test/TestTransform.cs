@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using OpenTK;
 
 namespace AlphaEngine.Test
 {
@@ -73,6 +74,75 @@ namespace AlphaEngine.Test
 
             Assert.That(() => aT.SetParent(cT), Throws.Exception.TypeOf<RedundantFatherException>());
         }
+        [Test]
+        public void GreenLight_Position()
+        {
+            Transform t = fakeGO.AddComponent<Transform>();
+            t.Position = Vector2.Zero;
+            t.Position += new Vector2(10, 10);
+            Assert.That(t.Position, Is.EqualTo(new Vector2(10,10)));
+            t.Position -= new Vector2(5, 5);
+            Assert.That(t.Position, Is.EqualTo(new Vector2(5, 5)));
+        }
+        [Test]
+        public void RedLight_Position()
+        {
+            Transform t = fakeGO.AddComponent<Transform>();
+            t.Position += new Vector2(10, 10);
+            Assert.That(t.Position, Is.Not.EqualTo(new Vector2(5, 5)));
+        }
+        [Test]
+        public void GreenLight_PositionWithParent()  //position assignation when parented, ignore parenting (like i want)
+        {
+            Transform t = fakeGO.AddComponent<Transform>();
+            Transform t2 = otherFakeGO.AddComponent<Transform>();
+            t.Parent = t2;
+            t.Position += new Vector2(10, 10);
+            Assert.That(t.Position, Is.EqualTo(new Vector2(10, 10)));
+            t2.Position = new Vector2(100, 10);
+            Assert.That(t2.Position, Is.EqualTo(new Vector2(100,10)));
+        }
+        [Test]
+        public void GreenLight_LocalPositionAssignation() //with parenting and without parenting
+        {
+            Transform t = fakeGO.AddComponent<Transform>();
+            Transform t2 = otherFakeGO.AddComponent<Transform>();
+            t.Parent = t2;
 
+            t2.LocalPosition = new Vector2(10, 10); //without parenting i expect that is assigned like position
+
+            t.LocalPosition = new Vector2(10, 10); // t have a parent
+            Assert.That(t2.Position, Is.EqualTo(new Vector2(10,10)));
+            Assert.That(t2.LocalPosition, Is.EqualTo(new Vector2(10, 10)));
+
+            Assert.That(t.Position, Is.EqualTo(new Vector2(20, 20)));
+            Assert.That(t.LocalPosition, Is.EqualTo(new Vector2(10, 10)));
+        }
+        [Test]
+        public void RedLight_LocalPositionAssignation() //with parenting and without parenting
+        {
+            Transform t = fakeGO.AddComponent<Transform>();
+            Transform t2 = otherFakeGO.AddComponent<Transform>();
+            t.Parent = t2;
+
+            t2.Position = new Vector2(10, 10);
+
+            t.LocalPosition = t2.Position + new Vector2(10, 10);
+            Assert.That(t.LocalPosition, Is.Not.EqualTo(new Vector2(10, 10)));
+            Assert.That(t.LocalPosition, Is.EqualTo(new Vector2(20, 20)));
+        }
+        [Test]
+        public void GreenLight_PositionAssignationWithParenting()
+        {
+            Transform t = fakeGO.AddComponent<Transform>();
+            Transform t2 = otherFakeGO.AddComponent<Transform>();
+            t.Parent = t2;
+
+            t2.Position = new Vector2(10, 10);
+            t.Position = new Vector2(-10, -10);
+
+            Assert.That(t.LocalPosition, Is.EqualTo(new Vector2(-20, -20)));
+            Assert.That(t.Position, Is.EqualTo(new Vector2(-10, -10)));
+        }
     }
 }

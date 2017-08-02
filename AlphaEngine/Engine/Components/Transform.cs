@@ -14,7 +14,7 @@ namespace AlphaEngine
         private Transform parent;
 
         private Vector2 position;
-        private Vector2 localPosition;
+        //private Vector2 localPosition;
 
 
         public Transform()
@@ -83,8 +83,22 @@ namespace AlphaEngine
         }
         public Vector2 LocalPosition
         {
-            get;
-            set;
+            get
+            {
+                if (Parent != null)
+                    return Position - Parent.Position; // is correct?
+                else
+                    return Position; //have no parent, then return my world position
+            }
+            set
+            {
+                if (Parent == null)
+                    Position = value;
+                else
+                {
+                    Position = Parent.Position + value;
+                }
+            }
         }
     }
 }
