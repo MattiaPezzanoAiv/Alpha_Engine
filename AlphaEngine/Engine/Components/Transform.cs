@@ -17,6 +17,7 @@ namespace AlphaEngine
         private Vector2 localPosition;
 
         private Vector2 scale;
+        private Vector2 localScale;
 
 
         public Transform()
@@ -92,7 +93,7 @@ namespace AlphaEngine
         }
         public Vector2 Scale
         {
-            get
+            get // like position but when get world scale return the product of all parents 
             {
                 return scale;
             }
