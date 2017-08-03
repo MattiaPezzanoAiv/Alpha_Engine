@@ -56,12 +56,30 @@ namespace AlphaEngine
         }
 
         /// <summary>
+        /// Return the current attached transform, null if there is no transform attached
+        /// </summary>
+        public Transform Transform
+        {
+            get
+            {
+                return GetComponent<Transform>();
+            }
+        }
+
+        /// <summary>
         /// Add a component object (or inherited) to a selected gameobject
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns>Return the instance of added component</returns>
         public T AddComponent<T>() where T : Component, new()
         {
+            if(typeof(T) == typeof(Transform))
+                if (GetComponent<Transform>() != null) //there is a transform attached
+                    throw new MultipleTransformException();
+            if (typeof(T).IsSubclassOf(typeof(Renderer)))
+                if (GetComponent<Transform>() == null) //add a transform if there isnt
+                    AddComponent<Transform>();
+
             T newComp = new T();
             newComp.SetOwner(this);
             components.Add(newComp);

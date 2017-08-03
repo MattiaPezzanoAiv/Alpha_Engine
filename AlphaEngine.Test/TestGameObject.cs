@@ -163,5 +163,12 @@ namespace AlphaEngine.Test
         {
             Assert.That(() => GameObject.ParseGOFromFile("AlphaEngine.Test/TestFolder/NotAComponent.txt"), Throws.Exception.TypeOf<NotAComponentException>());
         }
+        [Test]
+        public void GreenLight_ExceptionThrowingOnMultipleTransformAdd()
+        {
+            Assert.That(() => go.AddComponent<Transform>(), Throws.Nothing);
+            Assert.That(() => go.AddComponent<Transform>(), Throws.Exception.TypeOf<MultipleTransformException>());
+        }
+        
     }
 }

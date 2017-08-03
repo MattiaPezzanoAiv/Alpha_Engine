@@ -144,5 +144,19 @@ namespace AlphaEngine.Test
             Assert.That(t.LocalPosition, Is.EqualTo(new Vector2(-20, -20)));
             Assert.That(t.Position, Is.EqualTo(new Vector2(-10, -10)));
         }
+        [Test]
+        public void GreenLight_MovingTransformParented()
+        {
+            Transform t = fakeGO.AddComponent<Transform>();
+            Transform t2 = otherFakeGO.AddComponent<Transform>();
+            t.Parent = t2;
+            t2.Position = new Vector2(10, 10);
+            t.LocalPosition = new Vector2(10, 10);
+
+            t2.Position += new Vector2(100, 100);
+            Console.WriteLine(t2.Position);
+            Console.WriteLine(t.Position);
+            Assert.That(t.Position, Is.EqualTo(new Vector2(120, 120)));
+        }
     }
 }

@@ -25,4 +25,8 @@ namespace AlphaEngine
     {
 
     }
+    public class MultipleTransformException:AlphaException
+    {
+
+    }
 }

@@ -7,14 +7,16 @@ using OpenTK;
 
 namespace AlphaEngine
 {
-    public class Transform : Component
+    public sealed class Transform : Component
     {
 
         private List<Transform> children;
         private Transform parent;
 
         private Vector2 position;
-        //private Vector2 localPosition;
+        private Vector2 localPosition;
+
+        private Vector2 scale;
 
 
         public Transform()
@@ -37,11 +39,11 @@ namespace AlphaEngine
             {
                 Parent = null;  //set my father null
             }
-            else 
+            else
             {
                 //parenting check
                 Transform parentChecked = newParent;
-                while(parentChecked != null)
+                while (parentChecked != null)
                 {
                     if (parentChecked.parent == this)
                         throw new RedundantFatherException();
@@ -70,35 +72,73 @@ namespace AlphaEngine
                 return children.Count;
             }
         }
+        #region _GLOBAL
         public Vector2 Position
         {
             get
             {
+                if (Parent != null)
+                    return Parent.position + localPosition;
                 return position;
             }
             set
             {
                 position = value;
+                if (Parent != null)
+                    localPosition = position - Parent.Position;
+                else
+                    localPosition = value;
             }
         }
+        public Vector2 Scale
+        {
+            get
+            {
+                return scale;
+            }
+            set
+            {
+                scale = value;
+            }
+        }
+        #endregion
+
+
+        #region _LOCAL
         public Vector2 LocalPosition
         {
             get
             {
-                if (Parent != null)
-                    return Position - Parent.Position; // is correct?
-                else
-                    return Position; //have no parent, then return my world position
+                return localPosition;
             }
             set
             {
+                localPosition = value;
+
                 if (Parent == null)
+                {
                     Position = value;
+                }
                 else
                 {
-                    Position = Parent.Position + value;
+                    Position = Parent.Position + localPosition;
                 }
             }
         }
+        public Vector2 LocalScale   //NO COMPLETE
+        {
+            get
+            {
+                if (Parent != null)
+                    return Position - Parent.Position;
+                else
+                    return Position; //have no parent, then return my world scale
+            }
+            set
+            {
+
+            }
+        }
+        #endregion
     }
 }
