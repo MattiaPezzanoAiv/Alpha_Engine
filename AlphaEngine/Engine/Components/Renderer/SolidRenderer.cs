@@ -12,8 +12,7 @@ namespace AlphaEngine
     {
 
         public Color SolidColor { get; private set; }
-
-        //add transform and update positions
+        
 
         public SolidRenderer():base()
         {
