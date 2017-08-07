@@ -15,7 +15,7 @@ namespace AlphaEngine.Test
         [SetUp]
         public void Init()
         {
-            AlphaEngine.Init("",new OpenTK.Vector2(100,100));  //window must be instanced for mesh testing
+            AlphaEngine.Init("",new OpenTK.Vector2(100,100),"not correct path");  //window must be instanced for mesh testing
             go = new GameObject("go");
         }
 

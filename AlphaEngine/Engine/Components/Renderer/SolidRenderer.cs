@@ -21,7 +21,7 @@ namespace AlphaEngine
 
         public override void Update()
         {
-            UpdatePositions();
+            base.Update();
             sprite.DrawSolidColor(SolidColor.ToVector4());
         }
 

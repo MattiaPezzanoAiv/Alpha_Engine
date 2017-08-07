@@ -16,12 +16,13 @@ namespace AlphaEngine
         private static Time time;
         private static Dictionary<string, Type> componentsTypeMapping;
 
-        public static void Init(string contextName, Vector2 contextSize, bool fullScreen = false, int depthSize = 16, int antialiasingSamples = 0, int stencilBuffers = 0)
+        public static void Init(string contextName, Vector2 contextSize,string scenesPath, bool fullScreen = false, int depthSize = 16, int antialiasingSamples = 0, int stencilBuffers = 0)
         {
             window = new Window((int)contextSize.X, (int)contextSize.Y, contextName, fullScreen, depthSize, antialiasingSamples, stencilBuffers);
             time = new Time(window);
+            SceneManager.Init(scenesPath);
 
-            
+            //to do: send message to roberto, and get help
             #region DEVELOPMENT_IN_PAUSE
             /*
             //paused this code development fo a test problem on assembly(code is ok but test fail)
@@ -65,7 +66,7 @@ namespace AlphaEngine
 
             while(true)
             {
-
+                
                 window.Update();
             }
         }

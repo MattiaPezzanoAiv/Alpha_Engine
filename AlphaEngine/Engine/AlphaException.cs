@@ -29,4 +29,11 @@ namespace AlphaEngine
     {
 
     }
+    /// <summary>
+    /// Throwed when load a gameobject with the same name of other gameobject alredy loaded.
+    /// </summary>
+    public class AlredyLoadedObjectException : AlphaException
+    {
+
+    }
 }

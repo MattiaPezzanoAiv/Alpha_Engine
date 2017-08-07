@@ -22,16 +22,29 @@ namespace AlphaEngine
             sprite = new Sprite(width, height);
         }
 
+        public override void Update()
+        {
+            UpdateScale();
+            UpdatePosition();
+        }
 
         /// <summary>
         /// Must be called in each inherited renderer update
         /// </summary>
-        protected void UpdatePositions()
+        protected void UpdatePosition()
         {
             if (transform == null)
                 transform = GameObject.GetComponent<Transform>();
 
             sprite.position = transform.Position;
+        }
+
+        protected void UpdateScale()
+        {
+            if (transform == null)
+                transform = GameObject.GetComponent<Transform>();
+
+            sprite.scale = transform.Scale;
         }
     }
 }

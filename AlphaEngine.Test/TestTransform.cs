@@ -158,5 +158,29 @@ namespace AlphaEngine.Test
             Console.WriteLine(t.Position);
             Assert.That(t.Position, Is.EqualTo(new Vector2(120, 120)));
         }
+        [Test]
+        public void GeenLight_LocalScaleAssignation()
+        {
+            Transform t = fakeGO.AddComponent<Transform>();
+            Transform t2 = otherFakeGO.AddComponent<Transform>();
+            t.Parent = t2;
+            Transform t3 = new Transform();
+            t2.Parent = t3;
+
+            t.LocalScale = new Vector2(3, 3);
+            t2.LocalScale = new Vector2(2, 2);
+
+            Assert.That(t.Scale, Is.EqualTo(new Vector2(6, 6)));
+            t3.LocalScale = new Vector2(4, 4);
+            Assert.That(t.Scale, Is.EqualTo(new Vector2(24,24)));
+        }
+        [Test]
+        public void NotZeroScaleAtStart()
+        {
+            Transform t = fakeGO.AddComponent<Transform>();
+            Assert.That(t.LocalScale, Is.Not.EqualTo(new Vector2(0, 0)));
+            Assert.That(t.Scale, Is.Not.EqualTo(new Vector2(0, 0)));
+
+        }
     }
 }

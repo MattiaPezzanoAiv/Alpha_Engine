@@ -16,13 +16,13 @@ namespace AlphaEngine
         private Vector2 position;
         private Vector2 localPosition;
 
-        private Vector2 scale;
         private Vector2 localScale;
 
 
         public Transform()
         {
             children = new List<Transform>();
+            localScale = new Vector2(1, 1);
         }
 
         /// <summary>
@@ -95,12 +95,18 @@ namespace AlphaEngine
         {
             get // like position but when get world scale return the product of all parents 
             {
+                Vector2 scale = localScale;
+                Transform _parent = parent;
+                while(_parent != null)
+                {
+                    float x = scale.X * _parent.LocalScale.X;
+                    float y = scale.Y * _parent.LocalScale.Y;
+                    scale = new Vector2(x, y);
+                    _parent = _parent.Parent; //get parent of current parent
+                }
                 return scale;
             }
-            set
-            {
-                scale = value;
-            }
+          
         }
         #endregion
 
@@ -130,14 +136,11 @@ namespace AlphaEngine
         {
             get
             {
-                if (Parent != null)
-                    return Position - Parent.Position;
-                else
-                    return Position; //have no parent, then return my world scale
+                return localScale;
             }
             set
             {
-
+                localScale = value;
             }
         }
         #endregion

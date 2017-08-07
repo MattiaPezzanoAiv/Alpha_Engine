@@ -17,7 +17,7 @@ namespace AlphaEngine.Test
         [SetUp]
         public void Init()
         {
-            AlphaEngine.Init("test", new Vector2(50, 50));
+            AlphaEngine.Init("test", new Vector2(50, 50),"not correct path");
         }
 
         [Test]

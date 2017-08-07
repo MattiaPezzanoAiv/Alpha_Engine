@@ -41,6 +41,9 @@ namespace AlphaEngine
 
         public void Update()
         {
+            if (!IsActive) return; //this go not activated
+
+
             if (!started) Start();
 
             foreach (Component c in components)

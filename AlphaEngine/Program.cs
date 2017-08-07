@@ -15,11 +15,14 @@ namespace AlphaEngine
         {
             Window w = new Window(500, 500, "");
             GameObject pippo = new GameObject("pippo");
-            SolidRenderer r=  pippo.AddComponent<SolidRenderer>();
-            pippo.Transform.Position += new Vector2(100, 100);
-
+            SolidRenderer r = pippo.AddComponent<SolidRenderer>();
+            r.SetColor(Color.Red);
+            pippo.Transform.Position = new Vector2(10, 10);
+            pippo.Transform.LocalScale = new Vector2(3, 3);
+            
             while(w.opened)
             {
+
                 pippo.Update();
                 w.Update();
             }

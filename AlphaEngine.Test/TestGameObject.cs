@@ -42,7 +42,7 @@ namespace AlphaEngine.Test
         [SetUp]
         public void Init()
         {
-            AlphaEngine.Init("test", new Vector2(50, 50));
+            AlphaEngine.Init("test", new Vector2(50, 50),"not correct path");
             go = new GameObject("TEST");
         }
 
@@ -169,6 +169,24 @@ namespace AlphaEngine.Test
             Assert.That(() => go.AddComponent<Transform>(), Throws.Nothing);
             Assert.That(() => go.AddComponent<Transform>(), Throws.Exception.TypeOf<MultipleTransformException>());
         }
-        
+        [Test]
+        public void GreenLight_DeactivatedComponent()
+        {
+            GameObject fakeGo = new GameObject("fake");
+            fakeGo.IsActive = false;
+            FakeComponent c= fakeGo.AddComponent<FakeComponent>(); //here comp awaked
+            fakeGo.Update();
+            Assert.That(c.fakeVariable, Is.EqualTo(1)); //1 because component was awaked
+        }
+        [Test]
+        public void RedLight_DeactivatedComponent()
+        {
+            GameObject fakeGo = new GameObject("fake");
+            fakeGo.IsActive = false;
+            FakeComponent c = fakeGo.AddComponent<FakeComponent>();
+            fakeGo.Update();
+            Assert.That(c.fakeVariable, Is.Not.EqualTo(3));
+        }
+
     }
 }

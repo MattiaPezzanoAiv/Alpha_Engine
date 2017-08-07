@@ -55,6 +55,7 @@
     <Compile Include="Engine\AlphaException.cs" />
     <Compile Include="Engine\BaseObject.cs" />
     <Compile Include="Engine\Components\Component.cs" />
+    <Compile Include="Engine\Components\Renderer\BorderRenderer.cs" />
     <Compile Include="Engine\Components\Renderer\Color.cs" />
     <Compile Include="Engine\Components\Renderer\Renderer.cs" />
     <Compile Include="Engine\Components\Renderer\SolidRenderer.cs" />
