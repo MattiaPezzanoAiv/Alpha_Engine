@@ -43,6 +43,7 @@ namespace AlphaEngine.Test
         public void Init()
         {
             AlphaEngine.Init("test", new Vector2(50, 50),"not correct path");
+            Console.WriteLine(AlphaEngine.ComponentsTypeMapping.Count);
             go = new GameObject("TEST");
         }
 
@@ -159,7 +160,7 @@ namespace AlphaEngine.Test
             Assert.That(wasRemoved, Is.EqualTo(false));
         }
         [Test]
-        public void RedLight_ExeptionThrowingIsNotAComponent()  //not work because have an assembly problem
+        public void RedLight_ExeptionThrowingIsNotAComponent()  
         {
             Assert.That(() => GameObject.ParseGOFromFile("AlphaEngine.Test/TestFolder/NotAComponent.txt"), Throws.Exception.TypeOf<NotAComponentException>());
         }
@@ -187,6 +188,23 @@ namespace AlphaEngine.Test
             fakeGo.Update();
             Assert.That(c.fakeVariable, Is.Not.EqualTo(3));
         }
-
+        [Test]
+        public void GreenLight_ParseObjectUniqueTest()
+        {
+            //parse txt with a line comment,
+            //go field 
+            //component with component field
+            //only native field type
+        }
+        [Test]
+        public void RedLight_GoFieldNameError()
+        {
+            //parse file with unreal go field name
+        }
+        [Test]
+        public void RedLight_ComponentFieldNameError()
+        {
+            //parse file with unreal component field name
+        }
     }
 }

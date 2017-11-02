@@ -17,6 +17,7 @@ namespace AlphaEngine
         private Vector2 localPosition;
 
         private Vector2 localScale;
+        private float localRotation;
 
 
         public Transform()
@@ -106,7 +107,20 @@ namespace AlphaEngine
                 }
                 return scale;
             }
-          
+        }
+        public float Rotation
+        {
+            get
+            {
+                float rot = localRotation;
+                Transform _parent = parent;
+                while (_parent != null)
+                {
+                    rot = rot * _parent.localRotation;
+                    _parent = _parent.Parent; //get parent of current parent
+                }
+                return rot;
+            }
         }
         #endregion
 
@@ -132,7 +146,7 @@ namespace AlphaEngine
                 }
             }
         }
-        public Vector2 LocalScale   //NO COMPLETE
+        public Vector2 LocalScale   
         {
             get
             {
@@ -141,6 +155,17 @@ namespace AlphaEngine
             set
             {
                 localScale = value;
+            }
+        }
+        public float LocalRotation  //to do: write tests
+        {
+            get
+            {
+                return localRotation;
+            }
+            set
+            {
+                localRotation = value;
             }
         }
         #endregion

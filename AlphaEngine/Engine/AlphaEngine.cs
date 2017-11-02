@@ -22,15 +22,18 @@ namespace AlphaEngine
             time = new Time(window);
             SceneManager.Init(scenesPath);
 
-            //to do: send message to roberto, and get help
+            
             #region DEVELOPMENT_IN_PAUSE
-            /*
+            
             //paused this code development fo a test problem on assembly(code is ok but test fail)
 
             //initialization of type dictionary
             componentsTypeMapping = new Dictionary<string, Type>();
 
-            Assembly executingAssembly = Assembly.GetEntryAssembly();
+            //Assembly executingAssembly = Assembly.GetEntryAssembly(); //is ok
+            Assembly executingAssembly = Assembly.GetAssembly(typeof(AlphaEngine));
+            Console.WriteLine(executingAssembly);
+
             if (executingAssembly != null)
             {
                 foreach (Type t in executingAssembly.GetTypes())
@@ -41,6 +44,7 @@ namespace AlphaEngine
                     }
                 }
             }
+            
             AssemblyName[] assemblyNames = executingAssembly.GetReferencedAssemblies();
             if (assemblyNames == null) Console.WriteLine("is null");
             foreach (AssemblyName assemblyName in assemblyNames)
@@ -55,7 +59,7 @@ namespace AlphaEngine
                     }
                 }
             }
-            */
+            
             #endregion
             
         }

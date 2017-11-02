@@ -13,7 +13,11 @@ namespace AlphaEngine
     {
         static void Main(string[] args)
         {
+            AlphaEngine.Init("", new Vector2(10, 10), "");
             Window w = new Window(500, 500, "");
+            GameObject go2 = GameObject.ParseGOFromFile("../../TestFolder/MyFirstGameObject.txt");
+            Console.WriteLine(go2.IsActive);
+            Console.ReadLine();
             GameObject pippo = new GameObject("pippo");
             SolidRenderer r = pippo.AddComponent<SolidRenderer>();
             r.SetColor(Color.Red);
@@ -30,11 +34,10 @@ namespace AlphaEngine
             GameObject go1 = new GameObject("");
             Transform t1 = go1.AddComponent<Transform>();
 
-            GameObject go2 = new GameObject("a");
+            //GameObject go2 = new GameObject("a");
             Transform t2 = go2.AddComponent<Transform>();
             //AlphaEngine.Init("", new Vector2(50,50));
             //GameObject go = new GameObject("pippo");
-            //GameObject go2 = GameObject.ParseGOFromFile("../../../AlphaEngine.Test/TestFolder/NotAComponent.txt");
 
             t1.SetParent(t2);
             t2.Position = new Vector2(10, 10);

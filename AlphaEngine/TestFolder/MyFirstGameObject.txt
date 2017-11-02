@@ -1,5 +1,7 @@
+#this is a gameobject field
+IsActive:True
+
 Transform
 tempValue:10
 
-Transform
-tempValue:100
+

@@ -27,15 +27,10 @@ namespace AlphaEngine
         public static void Init(string scenesFolderPath)
         {
             scenesDirectoryPath = "../../" + scenesFolderPath;
-
-            //ScenesName = Directory.GetDirectories(scenesDirectoryPath);
-            //foreach (string s in ScenesName) //remove path from scene name
-            //{
-            //    s.Replace(scenesFolderPath, "");
-            //}
+            
         }
         
-        public static void TickGameObjects()
+        public static void TickGameObjects()  //do test
         {
             if (loadedObjects == null || loadedObjects.Count <= 0)
                 return;
@@ -50,7 +45,7 @@ namespace AlphaEngine
         /// Return the gameobject with the selected name if it was loaded, else return null
         /// </summary>
         /// <param name="name"></param>
-        public static GameObject GetObject(string name)
+        public static GameObject GetObject(string name)  //do test
         {
             if (loadedObjects.ContainsKey(name))
                 return loadedObjects[name];

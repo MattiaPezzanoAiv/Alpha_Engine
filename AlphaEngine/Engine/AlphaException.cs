@@ -36,4 +36,8 @@ namespace AlphaEngine
     {
 
     }
+    public class NotExistingFieldException:AlphaException
+    {
+
+    }
 }

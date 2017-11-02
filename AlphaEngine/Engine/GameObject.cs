@@ -156,29 +156,53 @@ namespace AlphaEngine
         /// </summary>
         public static void Instatiate(GameObject go)
         {
-            //add go at the scene objects
+            //add go to the scene objects
         }
 
         public static GameObject ParseGOFromFile(string filepath)
         {
+            if (AlphaEngine.ComponentsTypeMapping == null) throw new Exception("qui errore");
+
             GameObject currentGO = new GameObject(filepath);
 
             using (StreamReader reader = new StreamReader(filepath))
             {
                 string line = null;
+                bool goRegion = true; //if true setting go parameters
                 while ((line = reader.ReadLine()) != null)
                 {
                     if (line == "") //is a separator, next component
+                    {
+                        goRegion = false;
                         continue;
+                    }
                     if (line.StartsWith("#")) //is a comment line
                         continue;
+
+                    if(goRegion && line.Contains(":")) //check go variable, not component
+                    {
+                        string[] lineSplitted = line.Split(':');
+                        string value = lineSplitted[1];
+
+                        PropertyInfo fieldInfo = currentGO.GetType().GetProperty(lineSplitted[0],BindingFlags.Public | BindingFlags.Instance);
+                        if (fieldInfo == null)
+                            throw new NotExistingFieldException();
+                        if (fieldInfo.PropertyType == typeof(string))
+                            fieldInfo.SetValue(currentGO, value);
+                        else if (fieldInfo.PropertyType == typeof(float))
+                            fieldInfo.SetValue(currentGO, float.Parse(value));
+                        else if (fieldInfo.PropertyType == typeof(int))
+                            fieldInfo.SetValue(currentGO, int.Parse(value));
+                        else if (fieldInfo.PropertyType == typeof(bool))
+                            fieldInfo.SetValue(currentGO, bool.Parse(value));
+                    }
 
                     if (!line.Contains(":"))
                     {
                         //is a component name
                         if (!AlphaEngine.ComponentsTypeMapping.ContainsKey(line))
                             throw new NotAComponentException();
-
+                        goRegion = false;
                         Type componentType = AlphaEngine.ComponentsTypeMapping[line];
 
                         MethodInfo addComponent = typeof(GameObject).GetMethod("AddComponent");
