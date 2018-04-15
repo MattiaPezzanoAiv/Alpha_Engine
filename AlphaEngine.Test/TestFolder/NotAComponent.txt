@@ -1,0 +1,4 @@
+Notacomponent
+tempValue:10
+
+
